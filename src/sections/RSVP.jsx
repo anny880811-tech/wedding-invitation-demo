@@ -4,10 +4,11 @@ import DatePicker from "react-datepicker"
 import Select from "react-select"
 import axios from "axios"
 import { useRef, useState } from "react"
+import { getSheetDbConfig } from "../services/sheetdb"
 
 
 const RSVP = () => {
-  const sheetdbUrl = '/api/rsvp'
+  const sheetdbUrl = import.meta.env.VITE_RSVP_SHEETDB_API_URL
   const [confirmModal, setConfirmModal] = useState(false)
   const [pendingData, setPendingData] = useState(null)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -109,7 +110,11 @@ const RSVP = () => {
   const handleConfirm = async () => {
     setIsSubmitting(true)
     try {
-      await axios.post(sheetdbUrl, pendingData)
+      if (!sheetdbUrl) {
+        throw new Error("VITE_RSVP_SHEETDB_API_URL is not configured")
+      }
+
+      await axios.post(sheetdbUrl, { data: pendingData }, getSheetDbConfig())
       setConfirmModal(false)
       setIsSubmitted(true)
       setTimeout(() => {

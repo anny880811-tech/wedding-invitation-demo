@@ -2,7 +2,7 @@
 
 Public portfolio version of a real wedding invitation site built with React and Vite.
 
-The original production repository and data integrations are kept private to protect guest information. This demo uses environment variables for Google Sheets integration and includes only sample guest route data.
+The original production repository and data integrations are kept private to protect guest information. This demo uses SheetDB with a separate demo Google Sheet and includes only sample guest route data.
 
 ## Setup
 
@@ -11,13 +11,14 @@ npm install
 npm run dev
 ```
 
-Copy `.env.example` to `.env.local` and set demo Google Sheets credentials before testing the RSVP or message APIs locally.
+Copy `.env.example` to `.env.local` and set demo SheetDB endpoints before testing RSVP or guest messages locally.
 
 ## Environment Variables
 
-- `GOOGLE_SERVICE_ACCOUNT_KEY`: Google service account JSON string.
-- `RSVP_SPREADSHEET_ID`: Demo RSVP spreadsheet ID.
-- `MESSAGES_SPREADSHEET_ID`: Demo guest messages spreadsheet ID.
-- `VITE_API_PROXY_TARGET`: Optional local dev API proxy target.
+- `VITE_RSVP_SHEETDB_API_URL`: SheetDB API endpoint for RSVP responses.
+- `VITE_MESSAGES_SHEETDB_API_URL`: SheetDB API endpoint for guest messages.
+- `VITE_SHEETDB_TOKEN`: Optional SheetDB bearer token, if authentication is enabled.
 
-Do not use production spreadsheet IDs or production service account keys in this public demo repository.
+Because `VITE_*` variables are bundled into the browser build, use only demo SheetDB endpoints and demo tokens here. For a public portfolio site, prefer SheetDB permissions that allow only the actions this demo needs.
+
+Do not use production SheetDB endpoints, spreadsheet IDs, or service account keys in this public demo repository.

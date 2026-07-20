@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
+import { getSheetDbConfig, normalizeSheetDbRows } from '../services/sheetdb';
 
 const LeaveMessage = () => {
-  const messageUrl = '/api/messages'
+  const messageUrl = import.meta.env.VITE_MESSAGES_SHEETDB_API_URL
   const [wishData, setWishData] = useState([]);
   const [form, setForm] = useState({ name: '', wishes: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,14 +20,16 @@ const LeaveMessage = () => {
   useEffect(() => {
     const getWish = async () => {
       try {
-        const res = await axios.get(messageUrl);
-        setWishData(res.data);
+        if (!messageUrl) return;
+
+        const res = await axios.get(messageUrl, getSheetDbConfig());
+        setWishData(normalizeSheetDbRows(res.data));
       } catch (error) {
         console.error('讀取留言失敗', error)
       }
     }
     getWish();
-  }, [])
+  }, [messageUrl])
 
   // 當 wishData 改變時，動態計算滾動時間
   useEffect(() => {
@@ -45,7 +48,11 @@ const LeaveMessage = () => {
     if (!form.name.trim() || !form.wishes.trim()) return;
     setIsSubmitting(true);
     try {
-      const res = await axios.post(messageUrl, form)
+      if (!messageUrl) {
+        throw new Error('VITE_MESSAGES_SHEETDB_API_URL is not configured');
+      }
+
+      await axios.post(messageUrl, { data: form }, getSheetDbConfig())
       setWishData(prev => [...prev, [form.name, form.wishes]]);
       setForm({ name: '', wishes: '' })
       // console.log('成功', res.data);
