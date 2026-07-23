@@ -114,7 +114,7 @@ const RSVP = () => {
         throw new Error("VITE_RSVP_SHEETDB_API_URL is not configured")
       }
 
-      await axios.post(sheetdbUrl, { data: pendingData }, getSheetDbConfig())
+      await axios.post(sheetdbUrl, { data: [pendingData] }, getSheetDbConfig())
       setConfirmModal(false)
       setIsSubmitted(true)
       setTimeout(() => {

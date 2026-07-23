@@ -52,7 +52,7 @@ const LeaveMessage = () => {
         throw new Error('VITE_MESSAGES_SHEETDB_API_URL is not configured');
       }
 
-      await axios.post(messageUrl, { data: form }, getSheetDbConfig())
+      await axios.post(messageUrl, { data: [form] }, getSheetDbConfig())
       setWishData(prev => [...prev, [form.name, form.wishes]]);
       setForm({ name: '', wishes: '' })
       // console.log('成功', res.data);
