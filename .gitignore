@@ -34,3 +34,5 @@ tatus
 *.winmd
 src/music/bgm-OLD.mp3
 src/music/bgm-NEW.mp3
+.codex-build/
+*.inspect.ndjson

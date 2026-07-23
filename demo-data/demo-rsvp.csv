@@ -1,0 +1,3 @@
+joinStatus,name,statistics,email,arrivalDate,arrivalTime,arrivalInfoStatus,arrivalInfoContent,departureDate,departureTime,departureInfoStatus,departureInfoContent,allergyStatus,allergyContent,needStatus,needContent,journeyStatus
+yes,Demo Guest,2,demo.guest@example.com,01/23/2027,02:30 PM,CI771,,01/26/2027,03:10 PM,CI772,,none,,none,,A
+no,Unable Guest,,unable.guest@example.com,,,,,,,,,,,,,
